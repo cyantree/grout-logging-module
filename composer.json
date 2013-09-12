@@ -1,0 +1,17 @@
+{
+    "name": "cyantree/grout-logging-module",
+    "type": "grout-module",
+    "description": "module which provides logging capabilities for development purposes",
+    "keywords": ["grout", "logging"],
+    "homepage": "https://github.com/cyantree/grout-logging-module",
+    "license": "LGPL-3.0",
+    "authors": [
+        {"name": "Christoph Schreiber", "email": "mail@cyantree.com"}
+    ],
+    "require": {
+        "cyantree/grout-module-installer": "0.0.*"
+    },
+    "extra": {
+        "grout-module-name": "Cyantree/LoggingModule"
+    }
+}
