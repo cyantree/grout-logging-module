@@ -4,7 +4,6 @@ namespace Grout\Cyantree\LoggingModule;
 use Cyantree\Grout\App\Module;
 use Cyantree\Grout\Event\Event;
 use Cyantree\Grout\Logging;
-use Grout\Cyantree\LoggingModule\Parsers\LoggingParser;
 use Grout\Cyantree\LoggingModule\Types\LoggingConfig;
 
 class LoggingModule extends Module
@@ -19,23 +18,19 @@ class LoggingModule extends Module
 
     public function init()
     {
-        $this->moduleConfig = $this->app->config->get($this->type, $this->id, new LoggingConfig());
+        $this->app->configs->setDefaultConfig($this->id, new LoggingConfig());
 
-        if(!$this->moduleConfig->accessKey){
-            $this->moduleConfig->accessKey = $this->app->config->internalAccessKey;
-        }
+        $this->moduleConfig = $this->app->configs->getConfig($this->id);
+        $this->moduleConfig->file = $this->app->parseUri($this->moduleConfig->file);
 
         $this->l = new Logging();
         $this->l->file = $this->app->parseUri($this->moduleConfig->file);
-        $this->l->start('START '.$this->app->name, $this->app->timeConstructed);
+        $this->l->start('START '.$this->app->getConfig()->projectTitle, $this->app->timeConstructed);
 
         $this->app->events->join('log', array($this, 'onLog'));
         $this->app->events->join('log0', array($this, 'onLog'));
 
-        $this->defaultPageType = 'LoggingPage';
-
-        $this->addNamedRoute('get-logs', $this->moduleConfig->accessKey . '/get/');
-        $this->addNamedRoute('clear-logs', $this->moduleConfig->accessKey . '/clear/');
+        $this->addRoute('', 'Pages\LoggingPage');
     }
 
     public function logChannel($id)
@@ -55,6 +50,6 @@ class LoggingModule extends Module
 
     public function destroy()
     {
-        $this->l->stop('END '.$this->app->name);
+        $this->l->stop('END '.$this->app->getConfig()->projectTitle);
     }
 }
