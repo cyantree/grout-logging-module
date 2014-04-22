@@ -31,6 +31,7 @@ class LoggingPage extends Page
 <!DOCTYPE html>
 <body>
 <div>
+<a href="?">Show logs</a>
 <a href="?mode=clear">Clear logs</a>
 </div>
 <div><strong>
