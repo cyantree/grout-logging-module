@@ -25,7 +25,7 @@ class LoggingModule extends Module
 
         $this->l = new Logging();
         $this->l->file = $this->app->parseUri($this->moduleConfig->file);
-        $this->l->start('START '.$this->app->getConfig()->projectTitle, $this->app->timeConstructed);
+        $this->l->start('START ' . $this->app->getConfig()->projectTitle, $this->app->timeConstructed);
 
         $this->app->events->join('log', array($this, 'onLog'));
         $this->app->events->join('log0', array($this, 'onLog'));
@@ -50,6 +50,6 @@ class LoggingModule extends Module
 
     public function destroy()
     {
-        $this->l->stop('END '.$this->app->getConfig()->projectTitle);
+        $this->l->stop('END ' . $this->app->getConfig()->projectTitle);
     }
 }
